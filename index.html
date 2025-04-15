@@ -3,112 +3,931 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Montenegro Trip Itinerary</title>
+    <title>Montenegro Adventure - Exclusive Itinerary</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+        /* Base styles */
+        :root {
+            --primary: #1a5276;
+            --secondary: #2980b9;
+            --accent: #f39c12;
+            --light: #f5f5f5;
+            --dark: #2c3e50;
+            --success: #27ae60;
+        }
+        
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
             background-color: #f9f9f9;
         }
-        h1 {
+        
+        /* Header styles */
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
             text-align: center;
-            color: #333;
-            margin-bottom: 20px;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
         }
-        h2 {
-            color: #666;
-            margin-top: 30px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
         }
-        p {
-            margin: 10px 0;
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 1;
         }
-        ul {
-            margin: 10px 0;
-            padding-left: 20px;
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-        li {
-            margin-bottom: 10px;
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
         }
-        strong {
-            color: #333;
+        
+        .trip-dates {
+            display: inline-block;
+            background-color: rgba(255,255,255,0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            margin-top: 1rem;
+            backdrop-filter: blur(5px);
         }
-        a {
-            color: #0066cc;
+        
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        /* Trip overview section */
+        .trip-overview {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: -3rem auto 2rem;
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .overview-item {
+            flex: 1 1 200px;
+            margin: 1rem;
+            text-align: center;
+        }
+        
+        .overview-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .overview-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        /* Itinerary section */
+        .itinerary-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            margin-right: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .section-title hr {
+            flex: 1;
+            border: none;
+            height: 2px;
+            background-color: var(--secondary);
+            opacity: 0.3;
+        }
+        
+        /* Day cards */
+        .itinerary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .day-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .day-header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .day-number {
+            position: absolute;
+            right: 1rem;
+            top: 0.7rem;
+            background-color: var(--accent);
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .day-date {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .day-content {
+            padding: 1.5rem;
+        }
+        
+        .activity-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .activity-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .activity-group h4 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .activity-icon {
+            margin-right: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        .activity-list {
+            list-style: none;
+        }
+        
+        .activity-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-bullet {
+            color: var(--accent);
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+            margin-top: 0.3rem;
+        }
+        
+        .activity-detail {
+            flex: 1;
+        }
+        
+        .activity-link {
+            color: var(--secondary);
             text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.2s;
         }
-        a:hover {
+        
+        .activity-link:hover {
+            color: var(--primary);
             text-decoration: underline;
+        }
+        
+        .link-icon {
+            font-size: 0.8rem;
+            margin-left: 0.3rem;
+        }
+        
+        /* Maps section */
+        .map-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .map-link {
+            display: block;
+            color: var(--secondary);
+            text-decoration: none;
+            padding: 0.8rem;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .map-link:hover {
+            background-color: #f5f9ff;
+        }
+        
+        .map-icon {
+            margin-right: 0.8rem;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        
+        .placeholder-map {
+            width: 100%;
+            height: 300px;
+            background-color: #eee;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            margin-top: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-links {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-link {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: color 0.2s;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .trip-overview {
+                padding: 1rem;
+            }
+            
+            .overview-item {
+                flex: 1 1 100%;
+                margin: 0.5rem 0;
+            }
+            
+            .day-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .itinerary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Utility classes */
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .text-accent { color: var(--accent); }
+        .text-primary { color: var(--primary); }
+        .text-secondary { color: var(--secondary); }
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background-color: var(--light);
+            color: var(--dark);
+            margin-left: 0.5rem;
+        }
+        .badge-success {
+            background-color: var(--success);
+            color: white;
+        }
+        .badge-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        .badge-accent {
+            background-color: var(--accent);
+            color: white;
         }
     </style>
 </head>
 <body>
-    <h1>Montenegro Trip Itinerary</h1>
-    <p>Welcome to your 6-day Montenegro adventure! This itinerary is designed for 2 adults and 4 teenagers (ages 12-16), balancing exploration of main sites, beach relaxation in Budva, and thrilling activities like rafting and ziplining in the north. Enjoy your trip from May 29 to June 4!</p>
+    <!-- Header Section -->
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <h1>Montenegro Adventure</h1>
+            <p class="subtitle">Discover the Adriatic's hidden gem with our exclusive itinerary</p>
+            <div class="trip-dates">May 29 - June 4, 2025</div>
+        </div>
+    </header>
     
-    <h2>Day 1: Arrival and Budva Exploration (May 29)</h2>
-    <ul>
-        <li><strong>Morning:</strong> Land at Tivat airport at 9:00 AM. Pick up your rental car and drive to Budva (30 minutes).</li>
-        <li><strong>Afternoon:</strong> Check into your accommodation in Budva (e.g., a hotel or apartment for 6). Explore <a href="https://www.visit-montenegro.com/destinations/budva/" target="_blank">Budva’s Old Town</a>—wander its narrow streets, visit the Citadel, and enjoy the coastal vibe.</li>
-        <li><strong>Evening:</strong> Relax on a nearby beach like <a href="https://www.google.com/maps/place/Mogren+Beach/" target="_blank">Mogren Beach</a> or <a href="https://www.google.com/maps/place/Slovenska+Plaza/" target="_blank">Slovenska Plaza</a>, followed by dinner at a local restaurant (try grilled seafood or ćevapi).</li>
-        <li><strong>Stay:</strong> Budva. <a href="https://www.booking.com/searchresults.html?ss=Budva" target="_blank">Search accommodations</a></li>
-    </ul>
+    <!-- Trip Overview -->
+    <div class="container">
+        <div class="trip-overview">
+            <div class="overview-item">
+                <div class="overview-icon">✈️</div>
+                <div class="overview-title">Duration</div>
+                <div>7 Days / 6 Nights</div>
+            </div>
+            <div class="overview-item">
+                <div class="overview-icon">🏨</div>
+                <div class="overview-title">Accommodations</div>
+                <div>2 Premium Hotels</div>
+            </div>
+            <div class="overview-item">
+                <div class="overview-icon">🚗</div>
+                <div class="overview-title">Destinations</div>
+                <div>Zabljak, Budva, Kotor</div>
+            </div>
+            <div class="overview-item">
+                <div class="overview-icon">🏞️</div>
+                <div class="overview-title">Highlights</div>
+                <div>Nature, Adventure, Beaches</div>
+            </div>
+        </div>
+        
+        <!-- Itinerary Section -->
+        <div class="itinerary-section">
+            <div class="section-title">
+                <h2>Your Day-by-Day Itinerary</h2>
+                <hr>
+            </div>
+            
+            <div class="itinerary-grid">
+                <!-- Day 1 -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">1</div>
+                        <div class="day-date">Thursday, May 29</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">✈️</span> Flights</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        TLV (06:45) → TIV (08:55)
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🚗</span> Travel</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Drive to Zabljak
+                                        <a href="https://maps.app.goo.gl/2hQHYJnTWQoBJZNH8" target="_blank" class="activity-link">
+                                            View Route <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏨</span> Accommodation</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://www.booking.com/Share-rI5sOMV" target="_blank" class="activity-link">
+                                            Woodland <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏞️</span> Activities</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Lake Piva
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://maps.app.goo.gl/QWmmAhN7DPGqAU5YA" target="_blank" class="activity-link">
+                                            Piva Canyon Zipline <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://maps.app.goo.gl/sy3VYRJSs1gMNbPV7" target="_blank" class="activity-link">
+                                            Piva Canyon Viewpoint <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🍽️</span> Food</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Dinner: 
+                                        <a href="https://maps.app.goo.gl/CtafKaa31M51CWF6A" target="_blank" class="activity-link">
+                                            Restaurant Or'O <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Day 2 -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">2</div>
+                        <div class="day-date">Friday, May 30</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏨</span> Accommodation</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://www.booking.com/Share-rI5sOMV" target="_blank" class="activity-link">
+                                            Woodland <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏞️</span> Activities</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Rafting
+                                        <span class="badge badge-accent">Adventure</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">✨</span> Recommended</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://maps.app.goo.gl/Vq7zBR9kDmZXX7JR6" target="_blank" class="activity-link">
+                                            Tara River Rafting <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Day 3 -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">3</div>
+                        <div class="day-date">Saturday, May 31</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏨</span> Accommodation</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://www.booking.com/Share-rI5sOMV" target="_blank" class="activity-link">
+                                            Woodland <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏞️</span> Activities</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Durmitor National Park
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://maps.app.goo.gl/sJZZk7aGAnDwquoV8" target="_blank" class="activity-link">
+                                            Black Lake <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Tara Bridge + Zipline
+                                        <span class="badge badge-accent">Adventure</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🍽️</span> Food</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Breakfast: 
+                                        <a href="https://maps.app.goo.gl/YyWmWvHmw5CwbFpd7" target="_blank" class="activity-link">
+                                            Shambala <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Day 4 -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">4</div>
+                        <div class="day-date">Sunday, June 1</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🚗</span> Travel</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Drive to Budva
+                                        <a href="https://maps.app.goo.gl/c4MpVmeEuU7tyu3W8" target="_blank" class="activity-link">
+                                            View Route <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏨</span> Accommodation</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://www.booking.com/Share-FugEz4o" target="_blank" class="activity-link">
+                                            Resort Bevilacqua <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏞️</span> Activities</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://maps.app.goo.gl/JNQUD46dmXHxvgmc9" target="_blank" class="activity-link">
+                                            Niagara Waterfall (Podgorica) <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://maps.app.goo.gl/wM7wpJ6nVv2wbTsL6" target="_blank" class="activity-link">
+                                            Lake Skadar cruise (Vilpazar) <span class="link-icon">↗</span>
+                                        </a>
+                                        <span class="badge badge-primary">Scenic</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Day 5 -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">5</div>
+                        <div class="day-date">Monday, June 2</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏨</span> Accommodation</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://www.booking.com/Share-FugEz4o" target="_blank" class="activity-link">
+                                            Resort Bevilacqua <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏞️</span> Activities</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Morning: Kotor Blue Cave Cruise
+                                        <span class="badge badge-primary">Scenic</span>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Afternoon: Kotor Old Town
+                                        <a href="https://maps.app.goo.gl/wNGZWgQgYhEqVcvS7" target="_blank" class="activity-link">
+                                            View Map <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Kotor Cable Car + Alpine Coaster
+                                        <a href="https://maps.app.goo.gl/F9pPUvCQSB9A21mw6" target="_blank" class="activity-link">
+                                            Location <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">✨</span> Recommended</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://maps.app.goo.gl/NXtSg7TGGsZtPpGe8" target="_blank" class="activity-link">
+                                            Blue Cave Tour <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Day 6 -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">6</div>
+                        <div class="day-date">Tuesday, June 3</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏨</span> Accommodation</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        <a href="https://www.booking.com/Share-FugEz4o" target="_blank" class="activity-link">
+                                            Resort Bevilacqua <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">🏞️</span> Activities</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Jaz Beach
+                                        <a href="https://maps.app.goo.gl/FKh5wRpG1osdnDTH7" target="_blank" class="activity-link">
+                                            Location <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Budva Old Town
+                                        <a href="https://maps.app.goo.gl/dL2y7SaEGx2y72rt8" target="_blank" class="activity-link">
+                                            Location <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Sveti Stefan
+                                        <a href="https://maps.app.goo.gl/DFShFAU7jL2bwLf98" target="_blank" class="activity-link">
+                                            Location <span class="link-icon">↗</span>
+                                        </a>
+                                        <span class="badge badge-primary">Scenic</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Day 7 -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <div class="day-number">7</div>
+                        <div class="day-date">Wednesday, June 4</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">✈️</span> Flights</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        TIV (11:00) → TLV (14:50)
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-group">
+                            <h4><span class="activity-icon">✨</span> Recommended</h4>
+                            <ul class="activity-list">
+                                <li class="activity-item">
+                                    <span class="activity-bullet">•</span>
+                                    <div class="activity-detail">
+                                        Morning: Explore Tivat before flight
+                                        <a href="https://maps.app.goo.gl/5Dh23Ew3M5oqZ9Uq7" target="_blank" class="activity-link">
+                                            Porto Montenegro <span class="link-icon">↗</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Map Section -->
+        <div class="itinerary-section">
+            <div class="section-title">
+                <h2>Travel Routes</h2>
+                <hr>
+            </div>
+            
+            <div class="map-container">
+                <a href="https://maps.app.goo.gl/2hQHYJnTWQoBJZNH8" target="_blank" class="map-link">
+                    <span class="map-icon">📍</span>
+                    <div>
+                        <strong>Day 1:</strong> Tivat Airport to Zabljak
+                    </div>
+                </a>
+                
+                <a href="https://maps.app.goo.gl/c4MpVmeEuU7tyu3W8" target="_blank" class="map-link">
+                    <span class="map-icon">📍</span>
+                    <div>
+                        <strong>Day 4:</strong> Zabljak to Budva (via Podgorica)
+                    </div>
+                </a>
+                
+                <a href="https://maps.app.goo.gl/dNswjqUJJWdxjA4Z9" target="_blank" class="map-link">
+                    <span class="map-icon">📍</span>
+                    <div>
+                        <strong>Day 5:</strong> Budva to Kotor
+                    </div>
+                </a>
+                
+                <a href="https://maps.app.goo.gl/vUiMSXZeBQj3ajQb9" target="_blank" class="map-link">
+                    <span class="map-icon">📍</span>
+                    <div>
+                        <strong>Day 7:</strong> Budva to Tivat Airport
+                    </div>
+                </a>
+                
+                <div class="placeholder-map">
+                    <img src="/api/placeholder/800/400" alt="Montenegro Trip Map" style="width:100%; height:auto; border-radius:5px;">
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <h2>Day 2: Kotor and Perast Day Trip (May 30)</h2>
-    <ul>
-        <li><strong>Morning:</strong> Drive to <a href="https://www.visit-montenegro.com/destinations/kotor/" target="_blank">Kotor</a> (30 minutes). Explore the UNESCO-listed Old Town, including <a href="https://en.wikipedia.org/wiki/Cathedral_of_Saint_Tryphon" target="_blank">St. Tryphon’s Cathedral</a>. If the teens are up for it, hike to the <a href="https://www.alltrails.com/trail/montenegro/kotor/kotor-fortress" target="_blank">fortress</a> (1-2 hours round trip) for panoramic views.</li>
-        <li><strong>Afternoon:</strong> Drive to <a href="https://www.visit-montenegro.com/destinations/perast/" target="_blank">Perast</a> (15 minutes from Kotor). Take a short boat ride to <a href="https://en.wikipedia.org/wiki/Our_Lady_of_the_Rocks" target="_blank">Our Lady of the Rocks</a>, a picturesque island church, and have lunch in Perast or Kotor.</li>
-        <li><strong>Evening:</strong> Return to Budva for dinner and a relaxed evening.</li>
-        <li><strong>Stay:</strong> Budva. <a href="https://www.booking.com/searchresults.html?ss=Budva" target="_blank">Search accommodations</a></li>
-    </ul>
-    
-    <h2>Day 3: Beach Day in Budva (May 31)</h2>
-    <ul>
-        <li><strong>Morning:</strong> Enjoy a leisurely morning at <a href="https://www.google.com/maps/place/Mogren+Beach/" target="_blank">Mogren Beach</a> (scenic and quieter) or <a href="https://www.google.com/maps/place/Slovenska+Plaza/" target="_blank">Slovenska Plaza</a> (lively and family-friendly).</li>
-        <li><strong>Afternoon:</strong> Optionally, drive to <a href="https://www.visit-montenegro.com/destinations/sveti-stefan/" target="_blank">Sveti Stefan</a> (15 minutes) for photos of this iconic island village, or stay at the beach.</li>
-        <li><strong>Evening:</strong> Dinner at a beachfront restaurant in Budva with sunset views.</li>
-        <li><strong>Stay:</strong> Budva. <a href="https://www.booking.com/searchresults.html?ss=Budva" target="_blank">Search accommodations</a></li>
-    </ul>
-    
-    <h2>Day 4: Ziplining at Lake Piva and Rafting Camp (June 1)</h2>
-    <ul>
-        <li><strong>Morning:</strong> Check out from Budva and drive to Plužine (2.5 hours). Experience an exciting <a href="https://www.extremezip.me/" target="_blank">zipline over Lake Piva</a> (around 1,400m long with stunning views).</li> <a href="https://www.montenegroadventure.travel/tour/zipline-piva-lake-pluzine/" target="_blank">Alternative zipline</a>
-        <li><strong>Afternoon:</strong> Drive to <a href="https://www.tarasportrafting.com/" target="_blank">Tara Sport Rafting Camp</a> near the Tara River (1.5 hours from Plužine). Check in and settle into the camp.</li>
-        <li><strong>Evening:</strong> Enjoy dinner at the camp, surrounded by nature.</li>
-        <li><strong>Stay:</strong> <a href="https://www.tarasportrafting.com/" target="_blank">Tara Sport Rafting Camp</a></li>
-    </ul>
-    
-    <h2>Day 5: Rafting on the Tara River and Return to Tivat (June 2)</h2>
-    <ul>
-        <li><strong>Morning:</strong> After breakfast, go <a href="https://www.tarasportrafting.com/" target="_blank">rafting on the Tara River</a>. This half-day trip (3-4 hours) covers 18 km of rapids in Europe’s deepest canyon—perfect for ages 12+.</li>
-        <li><strong>Afternoon:</strong> After lunch (usually included), drive to Tivat (3.5 hours). Check into your accommodation.</li>
-        <li><strong>Evening:</strong> Dinner in Tivat, perhaps at <a href="https://www.portomontenegro.com/" target="_blank">Porto Montenegro</a>’s waterfront.</li>
-        <li><strong>Stay:</strong> Tivat. <a href="https://www.booking.com/searchresults.html?ss=Tivat" target="_blank">Search accommodations</a></li>
-    </ul>
-    
-    <h2>Day 6: Tivat Exploration and Departure Prep (June 3)</h2>
-    <ul>
-        <li><strong>Morning:</strong> Explore Tivat at a relaxed pace. Visit <a href="https://www.portomontenegro.com/" target="_blank">Porto Montenegro</a>, a modern marina with shops and cafes, or unwind at a nearby beach.</li>
-        <li><strong>Afternoon:</strong> Optionally, drive to <a href="https://www.visit-montenegro.com/destinations/herceg-novi/" target="_blank">Herceg Novi</a> (40 minutes) for a quick stroll through its Old Town, or stay in Tivat to rest.</li>
-        <li><strong>Evening:</strong> Have a farewell dinner in Tivat at a waterfront restaurant.</li>
-        <li><strong>Stay:</strong> Tivat. <a href="https://www.booking.com/searchresults.html?ss=Tivat" target="_blank">Search accommodations</a></li>
-    </ul>
-    
-    <h2>Day 7: Departure (June 4)</h2>
-    <ul>
-        <li><strong>Early Morning:</strong> Drive to Tivat airport (10-15 minutes), arriving by 7:00 AM for your 9:00 AM flight. Return the rental car and depart.</li>
-    </ul>
-    
-    <h2>Practical Tips</h2>
-    <ul>
-        <li><strong>Transportation:</strong> A rental car from Tivat airport is ideal for this itinerary, especially for the northern leg. Rent a car via <a href="https://www.discovercars.com/montenegro/tivat-airport" target="_blank">DiscoverCars</a>. Public buses are less practical here.</li>
-        <li><strong>Bookings:</strong> Reserve rafting and ziplining ahead of time—late May/early June is the start of peak season.</li>
-        <li><strong>Weather:</strong> Bring swimwear and sunscreen for the coast, plus jackets for the cooler northern mountains.</li>
-        <li><strong>Costs:</strong> Plan for car rental, accommodations, activities (roughly €75-100 per person for rafting and ziplining), and meals.</li>
-        <li><strong>Food:</strong> Sample Montenegrin cuisine—burek, fresh fish, and local wines are must-tries.</li>
-    </ul>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Montenegro Adventure</div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Home</a>
+                <a href="#" class="footer-link">Destinations</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">About Us</a>
+            </div>
+            <div class="copyright">
+                © 2025 Montenegro Adventure Travel. All rights reserved.
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
