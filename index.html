@@ -1068,7 +1068,7 @@
                     </div>
                 </a>
                 
-                <a href="https://maps.app.goo.gl/FHzUek6MgHYQiGz17" target="_blank" class="map-link">
+                <a href="https://maps.app.goo.gl/c4MpVmeEuU7tyu3W8" target="_blank" class="map-link">
                     <span class="map-icon">📍</span>
                     <div>
                         <strong>Day 4:</strong> Zabljak to Budva (via Podgorica)
@@ -1127,7 +1127,7 @@
 
         // Function to get weather icon based on weather code
         function getWeatherIcon(weatherCode, isDay) {
-            // Weather code mapping for Open-Meteo
+            // Complete WMO Weather Code mapping for Open-Meteo
             const weatherIcons = {
                 0: isDay ? '☀️' : '🌙',  // Clear sky
                 1: isDay ? '🌤️' : '🌙',  // Mainly clear
@@ -1138,15 +1138,25 @@
                 51: '🌦️', // Light drizzle
                 53: '🌦️', // Moderate drizzle
                 55: '🌧️', // Dense drizzle
+                56: '🧊', // Light freezing drizzle
+                57: '🧊', // Dense freezing drizzle
                 61: '🌦️', // Slight rain
                 63: '🌧️', // Moderate rain
                 65: '🌧️', // Heavy rain
-                71: '🌨️', // Slight snow
-                73: '❄️',  // Moderate snow
-                75: '❄️',  // Heavy snow
-                95: '⛈️',  // Thunderstorm
-                96: '⛈️',  // Thunderstorm with light hail
-                99: '⛈️'   // Thunderstorm with heavy hail
+                66: '🧊', // Light freezing rain
+                67: '🧊', // Heavy freezing rain
+                71: '🌨️', // Slight snow fall
+                73: '❄️', // Moderate snow fall
+                75: '❄️', // Heavy snow fall
+                77: '❄️', // Snow grains
+                80: '🌦️', // Slight rain showers
+                81: '🌧️', // Moderate rain showers
+                82: '🌧️', // Violent rain showers
+                85: '🌨️', // Slight snow showers
+                86: '❄️', // Heavy snow showers
+                95: '⛈️', // Thunderstorm: Slight or moderate
+                96: '⛈️', // Thunderstorm with slight hail
+                99: '⛈️'  // Thunderstorm with heavy hail
             };
             return weatherIcons[weatherCode] || '🌤️';
         }
@@ -1163,17 +1173,27 @@
                 51: 'Light drizzle',
                 53: 'Moderate drizzle',
                 55: 'Dense drizzle',
+                56: 'Light freezing drizzle',
+                57: 'Dense freezing drizzle',
                 61: 'Light rain',
                 63: 'Moderate rain',
                 65: 'Heavy rain',
+                66: 'Light freezing rain',
+                67: 'Heavy freezing rain',
                 71: 'Light snow',
                 73: 'Moderate snow',
                 75: 'Heavy snow',
+                77: 'Snow grains',
+                80: 'Light rain showers',
+                81: 'Moderate rain showers',
+                82: 'Heavy rain showers',
+                85: 'Light snow showers',
+                86: 'Heavy snow showers',
                 95: 'Thunderstorm',
                 96: 'Thunderstorm with hail',
-                99: 'Heavy thunderstorm'
+                99: 'Heavy thunderstorm with hail'
             };
-            return descriptions[weatherCode] || 'Unknown';
+            return descriptions[weatherCode] || 'Partly cloudy';
         }
 
         // Function to fetch weather data with CORS proxy fallback
